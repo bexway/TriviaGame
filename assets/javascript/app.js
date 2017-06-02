@@ -66,6 +66,12 @@ var game = {
     console.log('placeholder');
     //display stats
     //ask to start new game
+  },
+
+  startGame: function(){
+    //reset and shuffle question order
+    //put first question on screen
+    //start timer
   }
 
 
