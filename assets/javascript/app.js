@@ -3,8 +3,8 @@ var game = {
   currentCorrectAnswer: -1,
   currentOptions: [],
   questiondb: questiondb,
-
   //An array of objects
+  questionOrder: shuffle(serialArray(questiondb.length)),
   wins: 0,
   losses: 0,
   defaultAnswerTime:20,
@@ -40,7 +40,10 @@ var game = {
   },
 
   nextQuestion: function(){
-
+    var index = this.questionOrder.shift();
+    console.log(index);
+    var q = this.questiondb[index];
+    console.log(q);
   },
 
   createQuestionHTML: function(){
@@ -90,7 +93,7 @@ function randomNumber(max, min=0){
 
 function serialArray(n){
   var arr = [];
-  for (var i = 1; i <= n; i++) {
+  for (var i = 0; i <= n-1; i++) {
    arr.push(i);
   }
   return arr;
