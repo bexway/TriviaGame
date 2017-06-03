@@ -1,7 +1,5 @@
 var game = {
-  currentQuestion: "",
-  currentCorrectAnswer: -1,
-  currentOptions: [],
+  currentQuestion: null,
   questiondb: questiondb,
   //An array of objects
   questionOrder: shuffle(serialArray(questiondb.length)),
@@ -42,14 +40,19 @@ var game = {
   nextQuestion: function(){
     var index = this.questionOrder.shift();
     console.log(index);
-    var q = this.questiondb[index];
-    console.log(q);
+    this.currentQuestion = this.questiondb[index];
+    $('#question').html(this.createQuestionHTML());
   },
 
   createQuestionHTML: function(){
-    console.log('placeholder');
     //Create input of radio type, put them all in a giv and change the display to make them inline
     //Name same for each question
+    var questionContainer = $('<div>').addClass("question").attr("id", "myQuestion").data("questionvar", this.currentQuestion);
+    var qtext = '<p class="questionText">'+
+    this.currentQuestion.question +
+    '</p>';
+    questionContainer.append(qtext);
+    return questionContainer;
   },
 
   ifRightAnswer: function(){
