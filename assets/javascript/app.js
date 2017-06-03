@@ -30,7 +30,7 @@ var game = {
 
   updateTimer: function(){
     game.timeLeft--;
-    console.log(game.timeLeft);
+    $('#timer').html(game.timeLeft);
     if(game.timeLeft<=0){
       game.stopTimer();
       console.log("Time up!");
@@ -48,9 +48,15 @@ var game = {
     //Create input of radio type, put them all in a giv and change the display to make them inline
     //Name same for each question
     var questionContainer = $('<div>').addClass("question").attr("id", "myQuestion").data("questionvar", this.currentQuestion);
+    console.log(this.currentQuestion.answers);
+    var answers = shuffle(this.currentQuestion.answers);
     var qtext = '<p class="questionText">'+
     this.currentQuestion.question +
-    '</p>';
+    '</p>'+'<div class="answers">' +
+    '<input type="radio" name="answer" value='+answers[0]+'>'+ answers[0]+
+    '<input type="radio" name="answer" value='+answers[1]+'>'+ answers[1]+
+    '<input type="radio" name="answer" value='+answers[2]+'>'+ answers[2]+
+    '<input type="radio" name="answer" value='+answers[3]+'>'+ answers[3];
     questionContainer.append(qtext);
     return questionContainer;
   },
