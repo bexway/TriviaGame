@@ -3,6 +3,7 @@ var game = {
   currentCorrectAnswer: -1,
   currentOptions: [],
   questiondb: questiondb,
+
   //An array of objects
   wins: 0,
   losses: 0,
@@ -32,16 +33,20 @@ var game = {
   updateTimer: function(){
     game.timeLeft--;
     console.log(game.timeLeft);
+    if(game.timeLeft<=0){
+      game.stopTimer();
+      console.log("Time up!");
+    }
   },
 
   nextQuestion: function(){
-    var q = this.questiondb[randomNumber(this.questiondb.length)];
-    console.log(q.question);
+
   },
 
   createQuestionHTML: function(){
     console.log('placeholder');
     //Create input of radio type, put them all in a giv and change the display to make them inline
+    //Name same for each question
   },
 
   ifRightAnswer: function(){
