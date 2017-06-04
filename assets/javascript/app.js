@@ -38,15 +38,14 @@ var game = {
   },
 
   nextQuestion: function(){
-    var index = this.questionOrder.shift();
-    console.log(index);
-    this.currentQuestion = this.questiondb[index];
-    $('#question').html(this.createQuestionHTML());
+    var index = game.questionOrder.shift();
+    game.currentQuestion = this.questiondb[index];
+    //display question
+    $('#question').html(game.createQuestionHTML());
+    game.startTimer();
   },
 
   createQuestionHTML: function(){
-    //Create input of radio type, put them all in a giv and change the display to make them inline
-    //Name same for each question
     var questionContainer = $('<div>').addClass("question").attr("id", "myQuestion").data("questionvar", this.currentQuestion);
     console.log(this.currentQuestion.answers);
     var answers = shuffle(this.currentQuestion.answers);
@@ -61,11 +60,29 @@ var game = {
     return questionContainer;
   },
 
+  checkAnswer: function(){
+    game.stopTimer();
+    if($('input[name="answer"]:checked').val()===this.currentQuestion.correctAnswer){
+      console.log("Correct!");
+      this.ifRightAnswer();
+    }
+    else{
+      console.log("Wrong!");
+    }
+  },
+
   ifRightAnswer: function(){
     console.log('placeholder');
     //increment wins
-    //stop timer
+    this.wins++;
     //check if done with trivia
+    if(this.questionOrder.length===0){
+      this.gameOver();
+    }
+    else{
+      console.log("Next question...");
+      setTimeout(this.nextQuestion, 1000 * 5);
+    }
     //setTimeout(newQuestionFunction, 1000 * 5);
     //to give a few seconds before next question
   },
