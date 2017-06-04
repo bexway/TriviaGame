@@ -64,18 +64,12 @@ var game = {
     game.stopTimer();
     if($('input[name="answer"]:checked').val()===this.currentQuestion.correctAnswer){
       console.log("Correct!");
-      this.ifRightAnswer();
+      this.wins++;
     }
     else{
-      console.log("Wrong!");
+      this.losses++;
     }
-  },
 
-  ifRightAnswer: function(){
-    console.log('placeholder');
-    //increment wins
-    this.wins++;
-    //check if done with trivia
     if(this.questionOrder.length===0){
       this.gameOver();
     }
@@ -83,17 +77,6 @@ var game = {
       console.log("Next question...");
       setTimeout(this.nextQuestion, 1000 * 5);
     }
-    //setTimeout(newQuestionFunction, 1000 * 5);
-    //to give a few seconds before next question
-  },
-
-  ifWrongAnswer: function(){
-    console.log('placeholder');
-    //increment losses
-    //stop timer
-    //check if done with trivia
-    //setTimeout(newQuestionFunction, 1000 * 5);
-    //to give a few seconds before next question
   },
 
   gameOver: function(){
