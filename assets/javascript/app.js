@@ -33,7 +33,7 @@ var game = {
     $('#timer').html(game.timeLeft);
     if(game.timeLeft<=0){
       game.stopTimer();
-      console.log("Time up!");
+      game.checkAnswer();
     }
   },
 
@@ -53,19 +53,15 @@ var game = {
     this.currentQuestion.question +
     '</p>'+'<div class="answers">';
     for(var i=0;i<answers.length;i++){
-      qtext += '<input type="radio" name="answer" value='+answers[i]+'>'+ answers[i];
+      qtext += '<input id="answerbuttons" type="radio" name="answer" value='+answers[i]+'>'+ answers[i];
     }
-    // '<input type="radio" name="answer" value='+answers[0]+'>'+ answers[0]+
-    // '<input type="radio" name="answer" value='+answers[1]+'>'+ answers[1]+
-    // '<input type="radio" name="answer" value='+answers[2]+'>'+ answers[2]+
-    // '<input type="radio" name="answer" value='+answers[3]+'>'+ answers[3];
     questionContainer.append(qtext);
 
     // https://stackoverflow.com/a/8936678
-    questionContainer.append($('<button/>', {
-        text: 'Submit',
-        id: 'submit_btn',
-        click: game.checkAnswer}).addClass("btn"));
+    // questionContainer.append($('<button/>', {
+    //     text: 'Submit',
+    //     id: 'submit_btn',
+    //     click: game.checkAnswer}).addClass("btn"));
     return questionContainer;
   },
 
@@ -84,7 +80,7 @@ var game = {
     }
     else{
       console.log("Next question...");
-      setTimeout(game.nextQuestion, 1000 * 5);
+      setTimeout(game.nextQuestion, 1000 * 1);
     }
   },
 
@@ -92,12 +88,17 @@ var game = {
     console.log('placeholder');
     //display stats
     //ask to start new game
+    $('#score').html("<p>wins: "+this.wins+"</p><p>Losses:"+this.losses+"</p>");
   },
 
   startGame: function(){
     //reset and shuffle question order
-    //put first question on screen
-    //start timer
+    this.currentQuestion = null;
+
+    this.questionOrder= shuffle(serialArray(game.questiondb.length));
+    this.wins = 0;
+    this.losses = 0;
+    this.nextQuestion();
   }
 
 
@@ -140,6 +141,12 @@ function shuffle(array) {
 
 $(document).ready(function() {
   $('#timerbutton').click(function(){
-    game.startTimer();
+    game.startGame();
+  });
+
+  $(document).on('click', '#answerbuttons', function(){
+    if(game.currentQuestion){
+      game.checkAnswer();
+    }
   });
 });
