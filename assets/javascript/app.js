@@ -51,31 +51,40 @@ var game = {
     var answers = shuffle(this.currentQuestion.answers);
     var qtext = '<p class="questionText">'+
     this.currentQuestion.question +
-    '</p>'+'<div class="answers">' +
-    '<input type="radio" name="answer" value='+answers[0]+'>'+ answers[0]+
-    '<input type="radio" name="answer" value='+answers[1]+'>'+ answers[1]+
-    '<input type="radio" name="answer" value='+answers[2]+'>'+ answers[2]+
-    '<input type="radio" name="answer" value='+answers[3]+'>'+ answers[3];
+    '</p>'+'<div class="answers">';
+    for(var i=0;i<answers.length;i++){
+      qtext += '<input type="radio" name="answer" value='+answers[i]+'>'+ answers[i];
+    }
+    // '<input type="radio" name="answer" value='+answers[0]+'>'+ answers[0]+
+    // '<input type="radio" name="answer" value='+answers[1]+'>'+ answers[1]+
+    // '<input type="radio" name="answer" value='+answers[2]+'>'+ answers[2]+
+    // '<input type="radio" name="answer" value='+answers[3]+'>'+ answers[3];
     questionContainer.append(qtext);
+
+    // https://stackoverflow.com/a/8936678
+    questionContainer.append($('<button/>', {
+        text: 'Submit',
+        id: 'submit_btn',
+        click: game.checkAnswer}).addClass("btn"));
     return questionContainer;
   },
 
   checkAnswer: function(){
     game.stopTimer();
-    if($('input[name="answer"]:checked').val()===this.currentQuestion.correctAnswer){
+    if($('input[name="answer"]:checked').val()===game.currentQuestion.correctAnswer){
       console.log("Correct!");
-      this.wins++;
+      game.wins++;
     }
     else{
-      this.losses++;
+      game.losses++;
     }
 
-    if(this.questionOrder.length===0){
-      this.gameOver();
+    if(game.questionOrder.length===0){
+      game.gameOver();
     }
     else{
       console.log("Next question...");
-      setTimeout(this.nextQuestion, 1000 * 5);
+      setTimeout(game.nextQuestion, 1000 * 5);
     }
   },
 
