@@ -11,16 +11,15 @@ var game = {
   timerStarted: 0,
 
   startTimer: function(){
-    console.log('woah');
     if (!this.timerStarted) {
       this.timeLeft = this.defaultAnswerTime;
       this.interval = setInterval(this.updateTimer, 1000);
       this.timerStarted = true;
     }
-    else{
-      clearInterval(this.interval);
-      this.timerStarted = false;
-    }
+    // else{
+    //   clearInterval(this.interval);
+    //   this.timerStarted = false;
+    // }
   },
 
   stopTimer: function(){
@@ -51,9 +50,12 @@ var game = {
     var answers = shuffle(this.currentQuestion.answers);
     var qtext = '<p class="questionText">'+
     this.currentQuestion.question +
-    '</p>'+'<div class="answers">';
+    '</p>'+'<div class="row answers"><div class="col-md-10 flex flex-around flex-wrap border-thin col-md-offset-1 padding">';
     for(var i=0;i<answers.length;i++){
-      qtext += '<input id="answerbuttons" type="radio" name="answer" value='+answers[i]+'>'+ answers[i];
+      // qtext += '<input id="answerbuttons" type="radio" name="answer" value='+answers[i]+'>'+ answers[i];
+      qtext += '<div class="col-md-6">'+
+        '<label class="answerLabel" for='+answers[i]+'>This is a Test</label><input id='+answers[i]+''+answers[i]+' type="radio" name="answer" value='+answers[i]+'>'+
+      '</div>';
     }
     questionContainer.append(qtext);
 
@@ -68,10 +70,13 @@ var game = {
   checkAnswer: function(){
     game.stopTimer();
     if($('input[name="answer"]:checked').val()===game.currentQuestion.correctAnswer){
-      console.log("Correct!");
+      //TODO: Print message to show correctness
+      //TODO: add correctness class to corect answer
       game.wins++;
     }
     else{
+      //TODO: Print message to show wrongness
+      //TODO: add wrongness class to chosen answer, and correctness class to correct answer
       game.losses++;
     }
 
