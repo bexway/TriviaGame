@@ -4,10 +4,12 @@ body{
   --content-padding: 1em;
   --questionbg-hover:#c4dbff;
   --questionborder-hover:#13366d;
-  --questionbg-correct:#44ff47;
-  --questionborder-correct:#038205;
-  --questionbg-wrong:#ff2121;
-  --questionborder-wrong:#b70505;
+  --questionbg-correct:#77ff7a;
+  --questionbg-correct-hover:#47ff4b;
+  --questionborder-correct:#005901;
+  --questionbg-wrong:#ff8484;
+  --questionbg-wrong-hover:#ff5454;
+  --questionborder-wrong:#7f0000;
 }
 
 input[type="radio"] {
@@ -25,6 +27,10 @@ input[type="radio"]:checked ~ label {
   border: 1px solid #FAFAFA;
 }
 
+
+
+/*Answer Button Label Styles*/
+
 label.answerLabel {
   border: 1px solid gray;
   box-sizing: border-box;
@@ -38,9 +44,57 @@ label.answerLabel {
 }
 label.answerLabel:hover, label.answerLabel:focus, label.answerLabel:active {
   border: 1px solid var(--questionborder-hover);
+  border-radius: 10px;
   background-color: var(--questionbg-hover);
   color: var(--questionborder-hover);
 }
+
+label.answerLabelCorrect {
+  border: 1px solid var(--questionborder-correct);
+  background-color: var(--questionbg-correct);
+  color: var(--questionborder-correct);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: 10px 10px 30px 10px;
+  cursor: pointer;
+  opacity: 1;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+}
+label.answerLabelCorrect:hover, label.answerLabelCorrect:focus, label.answerLabelCorrect:active {
+  border: 1px solid var(--questionborder-correct);
+  border-radius: 10px;
+  background-color: var(--questionbg-correct-hover);
+  color: var(--questionborder-correct);
+}
+
+label.answerLabelWrong {
+  border: 1px solid var(--questionborder-wrong);
+  background-color: var(--questionbg-wrong);
+  color: var(--questionborder-wrong);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: 10px 10px 30px 10px;
+  cursor: pointer;
+  opacity: 1;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+}
+label.answerLabelWrong:hover, label.answerLabelWrong:focus, label.answerLabelWrong:active {
+  border: 1px solid var(--questionborder-wrong);
+  border-radius: 10px;
+  background-color: var(--questionbg-wrong-hover);
+  color: var(--questionborder-wrong);
+}
+
+
+
+
+
+
+
 
 .border-thin{
   border: 2px solid var(--border-color);

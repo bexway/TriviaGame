@@ -54,7 +54,7 @@ var game = {
     for(var i=0;i<answers.length;i++){
       // qtext += '<input id="answerbuttons" type="radio" name="answer" value='+answers[i]+'>'+ answers[i];
       qtext += '<div class="col-md-6">'+
-        '<label class="answerLabel" for='+answers[i]+'>This is a Test</label><input id='+answers[i]+''+answers[i]+' type="radio" name="answer" value='+answers[i]+'>'+
+        '<label id="answerLabel'+answers[i]+'" class="answerLabel" for='+answers[i]+'>This is a Test</label><input id="answer'+answers[i]+'" type="radio" name="answer" value='+answers[i]+'>'+
       '</div>';
     }
     questionContainer.append(qtext);
@@ -67,16 +67,22 @@ var game = {
     return questionContainer;
   },
 
-  checkAnswer: function(){
+  checkAnswer: function(answer){
     game.stopTimer();
-    if($('input[name="answer"]:checked').val()===game.currentQuestion.correctAnswer){
+
+    if(answer===game.currentQuestion.correctAnswer){
+      console.log("correct");
       //TODO: Print message to show correctness
-      //TODO: add correctness class to corect answer
+      //add correctness class to corect answer
+      $("#answerLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
       game.wins++;
     }
     else{
       //TODO: Print message to show wrongness
-      //TODO: add wrongness class to chosen answer, and correctness class to correct answer
+      console.log("incorrect");
+      //add wrongness class to chosen answer, and correctness class to correct answer
+      $("#answerLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
+      $("#answerLabel"+answer).addClass("answerLabelWrong");
       game.losses++;
     }
 
@@ -85,7 +91,7 @@ var game = {
     }
     else{
       console.log("Next question...");
-      setTimeout(game.nextQuestion, 1000 * 1);
+      setTimeout(game.nextQuestion, 1000 * 3);
     }
   },
 
@@ -149,9 +155,10 @@ $(document).ready(function() {
     game.startGame();
   });
 
-  $(document).on('click', '#answerbuttons', function(){
+  $(document).on('click', '.answerLabel', function(){
     if(game.currentQuestion){
-      game.checkAnswer();
+      console.log($(this).attr("for"));
+      game.checkAnswer($(this).attr("for"));
     }
   });
 });
