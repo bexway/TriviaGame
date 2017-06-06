@@ -139,6 +139,14 @@ label.answerLabelWrong:hover, label.answerLabelWrong:focus, label.answerLabelWro
   text-align: center;
 }
 
+.hidden{
+  display:none;
+}
+
 .padding{
   padding: var(--content-padding);
+}
+
+.width-full{
+  width:100%;
 }

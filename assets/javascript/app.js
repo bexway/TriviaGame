@@ -12,32 +12,36 @@ var game = {
 
   startTimer: function(){
     if (!this.timerStarted) {
+      //reset the time left
       this.timeLeft = this.defaultAnswerTime;
       this.interval = setInterval(this.updateTimer, 1000);
       this.timerStarted = true;
+      //set html timer display
+      $('#timer').html(game.timeLeft);
     }
-    // else{
-    //   clearInterval(this.interval);
-    //   this.timerStarted = false;
-    // }
   },
 
   stopTimer: function(){
-    clearInterval(this.interval);
-    this.timerStarted = false;
+    clearInterval(game.interval);
+    game.timerStarted = false;
   },
 
   updateTimer: function(){
+    //decrement timer
     game.timeLeft--;
+    //set html timer display
     $('#timer').html(game.timeLeft);
+    //if timeup, stop timer and check with a blank answer
     if(game.timeLeft<=0){
       game.stopTimer();
-      game.checkAnswer();
+      game.checkAnswer(null);
     }
   },
 
   nextQuestion: function(){
+    //grab the question index from the front of the order array
     var index = game.questionOrder.shift();
+    //set current question var
     game.currentQuestion = this.questiondb[index];
     //display question
     $('#question').html(game.createQuestionHTML());
@@ -45,20 +49,22 @@ var game = {
   },
 
   createQuestionHTML: function(){
-    var questionContainer = $('<div>').addClass("question").attr("id", "myQuestion").data("questionvar", this.currentQuestion);
-    console.log(this.currentQuestion.answers);
+    //create containing div, with id
+    var questionContainer = $('<div>').addClass("question").attr("id", "myQuestion");
+    //randomize question order
     var answers = shuffle(this.currentQuestion.answers);
-    var qtext = '<p class="questionText">'+
+    //write string for the question and answers, starting with question and the div for the answers
+    var qtext = '<div class="row question"><p class="col-md-10 col-md-offset-1 questionText border-thin text-center">'+
     this.currentQuestion.question +
-    '</p>'+'<div class="row answers"><div class="col-md-10 flex flex-around flex-wrap border-thin col-md-offset-1 padding">';
+    '</p></div>'+'<div class="row answers"><div class="col-md-10 col-md-offset-1 flex flex-around flex-wrap border-thin padding"><div class="row width-full">';
     for(var i=0;i<answers.length;i++){
-      // qtext += '<input id="answerbuttons" type="radio" name="answer" value='+answers[i]+'>'+ answers[i];
+      // for each answer, add an answer button
       qtext += '<div class="col-md-6">'+
-        '<label id="answerLabel'+answers[i]+'" class="answerLabel" for='+answers[i]+'>This is a Test</label><input id="answer'+answers[i]+'" type="radio" name="answer" value='+answers[i]+'>'+
+        '<label id="answerLabel'+answers[i]+'" class="answerLabel" for='+answers[i]+'>'+answers[i]+'</label><input id="answer'+answers[i]+'" type="radio" name="answer" value='+answers[i]+'>'+
       '</div>';
     }
     questionContainer.append(qtext);
-
+    //This is the code to add a submit button for submitting answers. It's helpful if you want to give users the change to choose different answers, instead of going with the first one they click
     // https://stackoverflow.com/a/8936678
     // questionContainer.append($('<button/>', {
     //     text: 'Submit',
@@ -103,6 +109,7 @@ var game = {
   },
 
   startGame: function(){
+    $('#timer').toggle();
     //reset and shuffle question order
     this.currentQuestion = null;
 
@@ -151,12 +158,12 @@ function shuffle(array) {
 }
 
 $(document).ready(function() {
-  $('#timerbutton').click(function(){
+  $('#startbutton').click(function(){
     game.startGame();
   });
 
   $(document).on('click', '.answerLabel', function(){
-    if(game.currentQuestion){
+    if(game.currentQuestion&&game.timerStarted){
       console.log($(this).attr("for"));
       game.checkAnswer($(this).attr("for"));
     }

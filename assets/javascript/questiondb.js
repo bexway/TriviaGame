@@ -1,12 +1,12 @@
 questiondb = [
   {
     question:"what0",
-    answers:["0","1","2","3"],
+    answers:["0","1","2"],
     correctAnswer: "0"
   },
   {
     question:"why2",
-    answers:["0","1","2","3"],
+    answers:["0","1","2","3","4"],
     correctAnswer: "2"
   },
   {
