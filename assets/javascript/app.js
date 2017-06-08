@@ -101,10 +101,10 @@ var game = {
     }
 
     if(game.questionOrder.length===0){
-      game.gameOver();
+      setTimeout(function(){game.gameOver();}, 1000 * 3);
     }
     else{
-      setTimeout(game.nextQuestion, 1000 * 3);
+      setTimeout(function(){game.nextQuestion();}, 1000 * 3);
     }
   },
 
@@ -123,7 +123,7 @@ var game = {
     $('#score').empty();
     //reset and shuffle question order
     this.currentQuestion = null;
-
+    this.rate = 1000;
     this.questionOrder= shuffle(serialArray(game.questiondb.length));
     this.wins = 0;
     this.losses = 0;

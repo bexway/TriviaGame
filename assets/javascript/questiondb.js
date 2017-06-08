@@ -34,7 +34,7 @@ questiondb = [
   },
   {
     question:"How much time do you get for each question?",
-    answers:[["20",0],["Daylight Savings Time isn't real",1],["Temporal measurement is an arbitrary concept",2],["Time is an illusory social construct",3],["30",4]],
+    answers:[["20",0],["Daylight Savings Time isn't real",1],["Temporal measurement is an arbitrary concept",0],["Time is an illusory social construct",3],["30",4]],
     correctAnswer: 0
   },
   {
@@ -49,7 +49,7 @@ questiondb = [
   },
   {
     question:"Why are the questions in this game weird?",
-    answers:[["test cases",1],["test cases",1],["test cases",1],["test cases",1]],
+    answers:[["to test my power",1],["to test my power",1],["to test my power",1],["to test my power",1]],
     correctAnswer: 1
   },
 ];
