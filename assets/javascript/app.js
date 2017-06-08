@@ -9,12 +9,13 @@ var game = {
   timeLeft:20,
   interval:null,
   timerStarted: 0,
+  rate:1000,
 
   startTimer: function(){
     if (!this.timerStarted) {
       //reset the time left
       this.timeLeft = this.defaultAnswerTime;
-      this.interval = setInterval(this.updateTimer, 1000);
+      this.interval = setInterval(this.updateTimer, this.rate);
       this.timerStarted = true;
       //set html timer display
       $('#timer').html(game.timeLeft);
@@ -60,9 +61,10 @@ var game = {
     for(var i=0;i<answers.length;i++){
       // for each answer, add an answer button
       qtext += '<div class="col-md-6">'+
-        '<label id="answerLabel'+answers[i]+'" class="answerLabel" for='+answers[i]+'>'+answers[i]+'</label><input id="answer'+answers[i]+'" type="radio" name="answer" value='+answers[i]+'>'+
+        '<label id="answerLabel'+answers[i][1]+'" class="answerLabel js-addLabel'+answers[i][1]+'" for='+answers[i][1]+'>'+answers[i][0]+'</label><input id="answer'+answers[i][1]+'" type="radio" name="answer" value='+answers[i][1]+'>'+
       '</div>';
     }
+    qtext += "</div><div id='message' class='row width-full text-center'><p class='col-md-12'></p></div>";
     questionContainer.append(qtext);
     //This is the code to add a submit button for submitting answers. It's helpful if you want to give users the change to choose different answers, instead of going with the first one they click
     // https://stackoverflow.com/a/8936678
@@ -76,40 +78,49 @@ var game = {
   checkAnswer: function(answer){
     game.stopTimer();
 
-    if(answer===game.currentQuestion.correctAnswer){
-      console.log("correct");
+    if(parseInt(answer)===game.currentQuestion.correctAnswer){
       //TODO: Print message to show correctness
       //add correctness class to corect answer
-      $("#answerLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
+      $(".js-addLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
+      $("#message").text("You got it right!");
       game.wins++;
+      if(game.rate>=400){
+        game.rate-=200;
+      }
     }
     else{
       //TODO: Print message to show wrongness
-      console.log("incorrect");
       //add wrongness class to chosen answer, and correctness class to correct answer
-      $("#answerLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
-      $("#answerLabel"+answer).addClass("answerLabelWrong");
+      $(".js-addLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
+      $(".js-addLabel"+answer).addClass("answerLabelWrong");
+      $("#message").text("Not quite! The green one is the correct answer!");
       game.losses++;
+      if(game.rate<=2000){
+        game.rate+=200;
+      }
     }
 
     if(game.questionOrder.length===0){
       game.gameOver();
     }
     else{
-      console.log("Next question...");
       setTimeout(game.nextQuestion, 1000 * 3);
     }
   },
 
   gameOver: function(){
-    console.log('placeholder');
     //display stats
     //ask to start new game
     $('#score').html("<p>wins: "+this.wins+"</p><p>Losses:"+this.losses+"</p>");
+    $('#startbutton').toggle();
+    $('#timer').toggle();
+    $('#question').empty();
   },
 
   startGame: function(){
     $('#timer').toggle();
+    $('#startbutton').toggle();
+    $('#score').empty();
     //reset and shuffle question order
     this.currentQuestion = null;
 
