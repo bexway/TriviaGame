@@ -1,7 +1,7 @@
 var game = {
   currentQuestion: null,
+  //see other file for questiondb variable
   questiondb: questiondb,
-  //An array of objects
   questionOrder: shuffle(serialArray(questiondb.length)),
   wins: 0,
   losses: 0,
@@ -79,7 +79,6 @@ var game = {
     game.stopTimer();
 
     if(parseInt(answer)===game.currentQuestion.correctAnswer){
-      //TODO: Print message to show correctness
       //add correctness class to corect answer
       $(".js-addLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
       $("#message").text("You got it right!");
@@ -89,7 +88,6 @@ var game = {
       }
     }
     else{
-      //TODO: Print message to show wrongness
       //add wrongness class to chosen answer, and correctness class to correct answer
       $(".js-addLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
       $(".js-addLabel"+answer).addClass("answerLabelWrong");
@@ -109,8 +107,7 @@ var game = {
   },
 
   gameOver: function(){
-    //display stats
-    //ask to start new game
+    //display stats, return buttons to initial states
     $('#score').html("<p>wins: "+this.wins+"</p><p>Losses:"+this.losses+"</p>");
     $('#startbutton').toggle();
     $('#timer').toggle();
@@ -134,6 +131,35 @@ var game = {
 
 
 };
+
+
+
+
+
+
+
+$(document).ready(function() {
+  $('#startbutton').click(function(){
+    game.startGame();
+  });
+
+  $(document).on('click', '.answerLabel', function(){
+    if(game.currentQuestion&&game.timerStarted){
+      //check the answer with the value from the clicked label
+      game.checkAnswer($(this).attr("for"));
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
 
 function randomNumber(max, min=0){
   return Math.floor(Math.random()*(max-min+1)+min);
@@ -167,16 +193,3 @@ function shuffle(array) {
 
   return array;
 }
-
-$(document).ready(function() {
-  $('#startbutton').click(function(){
-    game.startGame();
-  });
-
-  $(document).on('click', '.answerLabel', function(){
-    if(game.currentQuestion&&game.timerStarted){
-      console.log($(this).attr("for"));
-      game.checkAnswer($(this).attr("for"));
-    }
-  });
-});
