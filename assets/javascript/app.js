@@ -19,6 +19,7 @@ var game = {
       this.timerStarted = true;
       //set html timer display
       $('#timer').html(game.timeLeft);
+      $('#timer').removeClass("font-color-red");
     }
   },
 
@@ -36,6 +37,9 @@ var game = {
     if(game.timeLeft<=0){
       game.stopTimer();
       game.checkAnswer(null);
+    }
+    else if(game.timeLeft<=5){
+      $('#timer').addClass("font-color-red");
     }
   },
 
@@ -55,9 +59,9 @@ var game = {
     //randomize question order
     var answers = shuffle(this.currentQuestion.answers);
     //write string for the question and answers, starting with question and the div for the answers
-    var qtext = '<div class="row question"><p class="col-md-10 col-md-offset-1 questionText border-thin text-center">'+
+    var qtext = '<div class="row question"><p class="col-md-10 col-md-offset-1 questionText border-thin text-center bg-content">'+
     this.currentQuestion.question +
-    '</p></div>'+'<div class="row answers"><div class="col-md-10 col-md-offset-1 flex flex-around flex-wrap border-thin padding"><div class="row width-full">';
+    '</p></div>'+'<div class="row answers"><div class="col-md-10 col-md-offset-1 flex flex-around flex-wrap border-thin padding bg-content"><div class="row width-full">';
     for(var i=0;i<answers.length;i++){
       // for each answer, add an answer button
       qtext += '<div class="col-md-6">'+

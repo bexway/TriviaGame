@@ -4,10 +4,26 @@
 
 /*https://codepen.io/AngelaVelasquez/details/BWXbxP*/
 body{
-  --border-color: red;
+  background-image: url("../images/escheresque/escheresque.png");
+  background-repeat: repeat;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+
+  --bg-content: white;
+  --border-color: black;
   --content-padding: 1em;
-  --questionbg-hover:#c4dbff;
-  --questionborder-hover:#13366d;
+  --font-timer:'Luckiest Guy', cursive;
+  --font-general:'VT323', monospace;
+  --font-size-timer:3em;
+  --font-size-general:2em;
+  --questionbg-hover:#d2a3ff;
+  --questionborder-hover:#461377;
   --questionbg-correct:#77ff7a;
   --questionbg-correct-hover:#47ff4b;
   --questionborder-correct:#005901;
@@ -98,7 +114,14 @@ label.answerLabelWrong:hover, label.answerLabelWrong:focus, label.answerLabelWro
 
 
 
+.bg-content{
+  background: var(--bg-content)
+}
 
+.btn-start{
+  background: rebeccapurple;
+  color: white;
+}
 
 .border-thin{
   border: 2px solid var(--border-color);
@@ -130,6 +153,20 @@ label.answerLabelWrong:hover, label.answerLabelWrong:focus, label.answerLabelWro
 
 .flex-wrap{
   flex-wrap: wrap;
+}
+
+.font-general{
+  font-family: var(--font-general);
+  font-size: var(--font-size-general);
+}
+
+.font-timer{
+  font-family: var(--font-timer);
+  font-size: var(--font-size-timer);
+}
+
+.font-color-red{
+  color:red;
 }
 
 .form__answer {
