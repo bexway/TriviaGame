@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box
+}
+
 /*https://codepen.io/AngelaVelasquez/details/BWXbxP*/
 body{
   --border-color: red;
