@@ -112,7 +112,7 @@ var game = {
 
   gameOver: function(){
     //display stats, return buttons to initial states
-    $('#score').removeClass("hidden").html("<p>wins: "+this.wins+"</p><p>Losses:"+this.losses+"</p>");
+    $('#score').removeClass("hidden").html("<p>Wins: "+this.wins+"</p><p>Losses:"+this.losses+"</p>");
     $('#startbutton').toggle();
     $('#timer').toggle();
     $('#question').empty();
