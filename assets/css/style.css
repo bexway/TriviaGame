@@ -184,6 +184,10 @@ label.answerLabelWrong:hover, label.answerLabelWrong:focus, label.answerLabelWro
   display:none;
 }
 
+.margin-top{
+  margin-top: 1em;
+}
+
 .padding{
   padding: var(--content-padding);
 }

@@ -95,7 +95,7 @@ var game = {
       //add wrongness class to chosen answer, and correctness class to correct answer
       $(".js-addLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
       $(".js-addLabel"+answer).addClass("answerLabelWrong");
-      $("#message").text("Not quite! The green one is the correct answer!");
+      $("#message").text("Not quite! Green shows the correct answer!");
       game.losses++;
       if(game.rate<=2000){
         game.rate+=200;
@@ -112,7 +112,7 @@ var game = {
 
   gameOver: function(){
     //display stats, return buttons to initial states
-    $('#score').html("<p>wins: "+this.wins+"</p><p>Losses:"+this.losses+"</p>");
+    $('#score').removeClass("hidden").html("<p>wins: "+this.wins+"</p><p>Losses:"+this.losses+"</p>");
     $('#startbutton').toggle();
     $('#timer').toggle();
     $('#question').empty();
@@ -121,7 +121,7 @@ var game = {
   startGame: function(){
     $('#timer').toggle();
     $('#startbutton').toggle();
-    $('#score').empty();
+    $('#score').addClass("hidden").empty();
     //reset and shuffle question order
     this.currentQuestion = null;
     this.rate = 1000;
