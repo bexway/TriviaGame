@@ -79,34 +79,37 @@ var game = {
     return questionContainer;
   },
 
-  checkAnswer: function(answer){
-    game.stopTimer();
+  checkAnswer: function(){
+    if(game.currentQuestion&&game.timerStarted){
+      var answer =$(this).attr("for");
+      game.stopTimer();
 
-    if(parseInt(answer)===game.currentQuestion.correctAnswer){
-      //add correctness class to corect answer
-      $(".js-addLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
-      $("#message").text("You got it right!");
-      game.wins++;
-      if(game.rate>=400){
-        game.rate-=200;
+      if(parseInt(answer)===game.currentQuestion.correctAnswer){
+        //add correctness class to corect answer
+        $(".js-addLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
+        $("#message").text("You got it right!");
+        game.wins++;
+        if(game.rate>=400){
+          game.rate-=200;
+        }
       }
-    }
-    else{
-      //add wrongness class to chosen answer, and correctness class to correct answer
-      $(".js-addLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
-      $(".js-addLabel"+answer).addClass("answerLabelWrong");
-      $("#message").text("Not quite! Green shows the correct answer!");
-      game.losses++;
-      if(game.rate<=2000){
-        game.rate+=200;
+      else{
+        //add wrongness class to chosen answer, and correctness class to correct answer
+        $(".js-addLabel"+game.currentQuestion.correctAnswer).addClass("answerLabelCorrect");
+        $(".js-addLabel"+answer).addClass("answerLabelWrong");
+        $("#message").text("Not quite! Green shows the correct answer!");
+        game.losses++;
+        if(game.rate<=2000){
+          game.rate+=200;
+        }
       }
-    }
 
-    if(game.questionOrder.length===0){
-      setTimeout(function(){game.gameOver();}, 1000 * 3);
-    }
-    else{
-      setTimeout(function(){game.nextQuestion();}, 1000 * 3);
+      if(game.questionOrder.length===0){
+        setTimeout(function(){game.gameOver();}, 1000 * 3);
+      }
+      else{
+        setTimeout(function(){game.nextQuestion();}, 1000 * 3);
+      }
     }
   },
 
@@ -147,12 +150,14 @@ $(document).ready(function() {
     game.startGame();
   });
 
-  $(document).on('click', '.answerLabel', function(){
-    if(game.currentQuestion&&game.timerStarted){
-      //check the answer with the value from the clicked label
-      game.checkAnswer($(this).attr("for"));
-    }
-  });
+  // $(document).on('click', '.answerLabel', function(){
+  //   if(game.currentQuestion&&game.timerStarted){
+  //     //check the answer with the value from the clicked label
+  //     game.checkAnswer($(this).attr("for"));
+  //   }
+  // });
+
+  $(document).on('click', '.answerLabel', game.checkAnswer);
 });
 
 
