@@ -80,7 +80,7 @@ var game = {
   },
 
   checkAnswer: function(){
-    if(game.currentQuestion&&game.timerStarted){
+    if(game.currentQuestion){
       var answer =$(this).attr("for");
       game.stopTimer();
 
