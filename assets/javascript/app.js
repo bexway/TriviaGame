@@ -70,12 +70,6 @@ var game = {
     }
     qtext += "</div><div id='message' class='row width-full text-center'><p class='col-md-12'></p></div>";
     questionContainer.append(qtext);
-    //This is the code to add a submit button for submitting answers. It's helpful if you want to give users the change to choose different answers, instead of going with the first one they click
-    // https://stackoverflow.com/a/8936678
-    // questionContainer.append($('<button/>', {
-    //     text: 'Submit',
-    //     id: 'submit_btn',
-    //     click: game.checkAnswer}).addClass("btn"));
     return questionContainer;
   },
 
